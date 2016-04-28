@@ -21,3 +21,12 @@ void Discard(hand, discard){  //Kyle Probert
 void Sqeunce_Checker(stock/*The squneces already made*/, hand){
   //Use cin to ask how many cards they want to sequnce. Then ask for the postions of the cards, then use if else statements to chexck if the cards in in a sequnce. Also show them the stack and ask if they wnat to put a card there.
 }
+
+bool Win(hand){ //win condition, run at the end of every turn
+  if (hand.length() == 0)
+    return true;
+  else
+    return false;
+}
+
+}
