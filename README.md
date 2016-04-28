@@ -9,3 +9,16 @@ void Deal (stack<myvect>& deck, char hand){
     deck.pop();
   }
 }
+
+
+
+
+
+
+bool Win (){ //win condition; call in main after every turn
+  if (hand.length == 0)
+    return true;
+  else
+    return false;
+}
+
