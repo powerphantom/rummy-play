@@ -14,7 +14,7 @@ void Draw_Card ( deck, hand, discard){
   //Ask if the player wants to draw a card from the deck or the discard pile and palce it into their hand. use push_back function for hand and pop for deck. 
 }
 
-void Discard(hand, discard){
+void Discard(hand, discard){  //Kyle Probert
   //Show the player the cards they have in their hand and what position they're in. Ask the player what is the position of the card they want to get rid of. Use cin to get the positon hand[i].suit hand[i].value to tell their card push_back to put card in the discard pile and delet that card from their hand and decrease the size of their hand.
 }
 
