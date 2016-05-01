@@ -35,8 +35,28 @@ void Draw_Card (deck, hand, discard){
     cout << "Invalid Response" << ednl;
 }
 
-void Discard(hand, discard){  //Kyle Probert
-  //Show the player the cards they have in their hand and what position they're in. Ask the player what is the position of the card they want to get rid of. Use cin to get the positon hand[i].suit hand[i].value to tell their card push_back to put card in the discard pile and delet that card from their hand and decrease the size of their hand.
+  //Kyle Probert
+  /*Show the player the cards they have in their hand and what position they're in. Ask the player what is the position of the card they want to get rid of. Use cin to get the positon hand[i].suit hand[i].value to tell their card push_back to put card in the discard pile and delet that card from their hand and decrease the size of their hand.*/
+  
+  void Discard(vector<setup> hand, vector<setup> discard){
+
+	int pos;
+
+for (unsigned int i = 0; i < hand.size(); i++) {
+
+	cout << i << ": " << hand[i].suit << hand[i].val << ",  ";
+
+}
+
+	cout << "\n" << "Which card would you like to discard: " << endl;
+	cin >> pos;
+
+	discard.push_back(hand[pos]); //should add card from hand to last position of discard pile
+	hand.erase(hand.begin() + pos); //should delete card in hand[pos] and decrease size of hand
+
+
+}
+
 }
 
 void Sqeunce_Checker(stock/*The squneces already made*/, hand){
