@@ -3,10 +3,10 @@
 
 char hand[13];
 
-void Deal (stack<myvect>& deck, char hand){
-  for (int i = 0; i < 13; i++){
-    hand[i] = deck.top();
-    deck.pop();
+void Deal(stack<setup>& deck, vector<setup>& hand){ 
+	for (int i = 0; i < 13; i++){
+    	hand.push_back(deck.top());
+    	deck.pop();
   }
 }
 
