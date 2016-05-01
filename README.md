@@ -10,8 +10,29 @@ void Deal (stack<myvect>& deck, char hand){
   }
 }
 
-void Draw_Card ( deck, hand, discard){
-  //Ask if the player wants to draw a card from the deck or the discard pile and palce it into their hand. use push_back function for hand and pop for deck. 
+void Draw_Card (deck, hand, discard){
+  char resp; //user input
+  card newCard; //used for drawn card
+  cout << "Do you wish to draw from the deck?" << endl;
+  cin >> resp;
+  if (resp == Y||y){ //puts new card in hand, removes from stack
+    newCard = deck.top(); 
+    hand.push_back(newCard); //Did we get this working?
+    deck.pop();
+  }
+  else if (resp == N||n){
+    cout << "Draw from discard pile?" << endl; //only draws first card, can modify
+    cin >> resp;
+    if (resp == Y||y){
+      newCard = discard.top();
+      hand.push_back(newCard);
+      discard.pop();
+    }
+    else
+      cout << "Invalid Respose" << endl;
+  }
+  else
+    cout << "Invalid Response" << ednl;
 }
 
 void Discard(hand, discard){  //Kyle Probert
