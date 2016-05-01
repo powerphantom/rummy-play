@@ -38,7 +38,7 @@ void Draw_Card (deck, hand, discard){
   //Discard: Kyle Probert
   /*Show the player the cards they have in their hand and what position they're in. Ask the player what is the position of the card they want to get rid of. Use cin to get the positon hand[i].suit hand[i].value to tell their card push_back to put card in the discard pile and delet that card from their hand and decrease the size of their hand.*/
   
-  void Discard(vector<setup> hand, vector<setup> discard){
+  void Discard(vector<setup>& hand, vector<setup>& discard){
 
 	int pos;
 
