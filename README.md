@@ -32,7 +32,7 @@ void Draw_Card (deck, hand, discard){
       cout << "Invalid Respose" << endl;
   }
   else
-    cout << "Invalid Response" << ednl;
+    cout << "Invalid Response" << endl;
 }
 
   //Discard: Kyle Probert
