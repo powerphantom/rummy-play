@@ -12,7 +12,7 @@ void Deal(stack<setup>& deck, vector<setup>& hand){
 
 void Draw_Card (deck, hand, discard){
   char resp; //user input
-  card newCard; //used for drawn card
+  setup newCard; //used for drawn card
   cout << "Do you wish to draw from the deck?" << endl;
   cin >> resp;
   if (resp == Y||y){ //puts new card in hand, removes from stack
@@ -59,6 +59,172 @@ for (unsigned int i = 0; i < hand.size(); i++) {
 
 }
 
-void Sqeunce_Checker(stock/*The squneces already made*/, hand){
-  //Use cin to ask how many cards they want to sequnce. Then ask for the postions of the cards, then use if else statements to chexck if the cards in in a sequnce. Also show them the stack and ask if they wnat to put a card there.
+void Ask_squence(vector<setup>& hand, vector<setup>& stock){
+	char source;
+	cout << "Is you sequence from the stock or your hand: (S/H)"<<endl;
+	cin>>source;
+	if (source=='S'){
+		Sequence_Stock(hand, stock);
+	}
+	else if (source=='H'){
+		Sequence_Hand(hand, stock);}
+}
+
+void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
+	int cards=0;
+	int vcount=0;
+	int scount=0;
+	int i=0;
+	vector<setup> temp_stock;
+	vector<setup> temp_stock2;
+
+	cout << "Please enter how many cards you want to use:"<< endl;
+	cin>>cards;
+
+	for(i=0; i<hand.size(); i++){
+		cout << "In position "<< i << " you have the " << hand[i].val<<" of " << hand[i].suit<<endl;
+}
+
+	cout << "Please enter the postions of the cards you want to use IN ORDER:" << endl;
+
+	int p=0;
+	for(i=0; i<cards; i++){
+		cin>>p;
+		temp_stock.push_back(hand[p]);}
+
+	for (i=0; i<cards; i++){
+
+		if(temp_stock[i].val==temp_stock[i-1].val&&temp_stock[i].val==temp_stock[i+1].val){
+			vcount++;}
+
+		if(temp_stock[i].suit==temp_stock[i-1].suit&&temp_stock[i].suit==temp_stock[i+1].suit){
+			scount++;}
+	}
+
+
+	if (vcount==cards){
+		for(i=0; i<temp_stock.size(); i++){
+			for(j=0; j<hand.size(); j++){
+				if((temp_stock[i].suit==hand[j].suit)&&(temp_stock[i].val==hand[j].val)){
+			hand.erase(hand.begin()+j);}}}
+		for(i=0; i<cards; i++){
+		stock.push_back(temp_stock[i]);
+		}
+	}
+	else if(scount==cards){
+		for(i=0; i<cards; i++){
+		if(temp_stock[i].val>temp_stock[i+1].val){
+			std::swap(temp_stock[i], temp_stock[i+1]);
+			}
+		}
+		scount=0;
+		for(i=0; i<cards; i++){
+			if(temp_stock[i].val!=temp_stock[i+1].val){
+			break;}
+			scount++;}
+
+	if(scount==cards){
+		for(i=0; i<temp_stock.size(); i++){
+			for(j=0; j<hand.size(); j++){
+				if((temp_stock[i].suit==hand[j].suit)&&(temp_stock[i].val==hand[j].val)){
+			hand.erase(hand.begin()+j);}}}
+		for(i=0; i<cards; i++){
+		stock.push_back(temp_stock[i]);}
+	}
+}
+	else{
+		cout<<"Invalid Squence"<<endl;}
+
+
+}
+
+
+void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
+	int i=0;
+	int j=0;
+	int ipos=0;
+	int fpos=0;
+	int vcount=0;
+	int scount=0;
+	int cards=0;
+	vector<setup> temp;
+
+	for(i=0; i!=stock.size(); i++){
+		cout << i << stock[i].suit << stock[i].val<<endl;
+	}
+
+	cout<<"Please enter the starting position of the squence tou want to add to:"<<endl;
+	cin>>ipos;
+
+		cout<<"Please enter the final position of the squence tou want to add to:"<<endl;
+	cin>>fpos;
+	i=ipos;
+
+	for(ipos; ipos<=fpos; ipos++){
+		temp.push_back(stock[ipos]);
+	}
+
+	cout<<"Please enter the number of cards you want to use: "<<endl;
+	cin>>cards;
+
+	cout<<"In your hand: "<<endl;
+
+		for(i=0; i<hand.size(); i++){
+		cout << "In position "<< i << " you have the " << hand[i].val<<" of " << hand[i].suit<<endl;
+}
+
+	cout<< "Please enter the position of the cards you want to use IN ORDER: "<<endl;
+	int p=0;
+	for(i=0; i<cards; i++){
+		cin>>p;
+		temp.push_back(hand[p]);
+}
+
+
+	for (i=0; i<temp.size(); i++){
+
+		if(temp[i].val==temp[i-1].val&&temp[i].val==temp[i+1].val){
+			vcount++;}
+
+		if(temp[i].suit==temp[i-1].suit&&temp[i].suit==temp[i+1].suit){
+			scount++;}
+	}
+
+
+	if (vcount==temp.size()){
+		for(i=0; i<temp.size(); i++){
+			for(j=0; j<stock.size(); j++){
+				if((temp[i].suit==stock[j].suit)&&(temp[i].val==stock[j].val)){
+			stock.erase(stock.begin()+j);}}}
+		for(i=0; i<temp.size(); i++){
+		stock.push_back(temp[i]);
+		}
+	}
+	else if(scount==temp.size()){
+		for(i=0; i<temp.size(); i++){
+		if(temp[i].val>temp[i+1].val){
+			std::swap(temp[i], temp[i+1]);
+			}
+		}
+		scount=0;
+		for(i=0; i<temp.size(); i++){
+			if(temp[i].val!=temp[i+1].val){
+			break;}
+			scount++;}
+
+	if(scount==temp.size()){
+		for(i=0; i<temp.size(); i++){
+			for(j=0; j<stock.size(); j++){
+				if((temp[i].suit==stock[j].suit)&&(temp[i].val==stock[j].val)){
+			stock.erase(stock.begin()+j);}}}
+		for(i=0; i<temp.size(); i++){
+		stock.push_back(temp[i]);}
+	}
+}
+	else{
+		cout<<"Invalid Squence"<<endl;}
+
+	for(i=0; i!=stock.size(); i++){
+		cout << i << stock[i].suit << stock[i].val<<endl;
+	}
 }
