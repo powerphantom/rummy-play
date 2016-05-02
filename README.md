@@ -17,12 +17,12 @@ void Draw_Card (deck, hand, discard){
   setup newCard; //used for drawn card
   cout << "Do you wish to draw from the deck?" << endl;
   cin >> resp;
-  if (resp == Y||y){ //puts new card in hand, removes from stack
+  if (resp == 'Y'||'y'){ //puts new card in hand, removes from stack
     newCard = deck.top(); 
     hand.push_back(newCard); //Did we get this working?
     deck.pop();
   }
-  else if (resp == N||n){
+  else if (resp == 'N'||'n'){
     cout << "Draw from discard pile?" << endl; //only draws first card, can modify
     cin >> resp;
     if (resp == Y||y){
