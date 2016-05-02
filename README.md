@@ -11,6 +11,8 @@ void Deal(stack<setup>& deck, vector<setup>& hand){
 }
 
 void Draw_Card (deck, hand, discard){
+  int p=0;
+  int i=0;
   char resp; //user input
   setup newCard; //used for drawn card
   cout << "Do you wish to draw from the deck?" << endl;
@@ -24,9 +26,16 @@ void Draw_Card (deck, hand, discard){
     cout << "Draw from discard pile?" << endl; //only draws first card, can modify
     cin >> resp;
     if (resp == Y||y){
-      newCard = discard.top();
-      hand.push_back(newCard);
-      discard.pop();
+      for(i=0; i!= discard.size(); i++){
+      cout << "In postion " << i << " " << discard[i].suit << discard[i].val << endl;
+      }
+      
+      cout << "Please enter the position of the card you want: " << endl;
+      cin>>p;
+      
+      for(p; p!=discard.size(); p++){
+      hand.push_back(discard[p]);
+      }
     }
     else
       cout << "Invalid Respose" << endl;
