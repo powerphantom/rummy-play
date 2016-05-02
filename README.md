@@ -10,7 +10,7 @@ void Deal(stack<setup>& deck, vector<setup>& hand){
   }
 }
 
-void Draw_Card (deck, hand, discard){
+void Draw_Card (stack<setup>& deck,vector<setup>& hand,vector<setup> discard){
   int p=0;
   int i=0;
   char resp; //user input
