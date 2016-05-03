@@ -76,7 +76,7 @@ void Draw_Card (stack<setup>& deck,vector<setup>& hand,vector<setup>& discard){
 	cin >> resp;
     if (resp == 'Y'||'y'){
       for(i=0; i!= discard.size(); i++){
-      cout << "In postion " << i << " " << discard[i].suit << discard[i].val << endl;
+      cout << "In postion " << i << " " << discard[i].suit << Output(discard[i].val); << endl;
       }
       
       cout << "Please enter the position of the card you want: " << endl;
@@ -97,7 +97,7 @@ void Discard(vector<setup>& hand, vector<setup>& discard){
 	int pos;
 
 for (unsigned int i = 0; i < hand.size(); i++) {
-	cout << i << ": " << hand[i].suit << hand[i].val << ",  ";
+	cout << i << ": " << hand[i].suit << Output(hand[i].val); << ",  ";
 }
 
 	cout << "\n" << "Which card would you like to discard: " << endl;
@@ -132,7 +132,7 @@ void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
 	cin>>cards;
 
 	for(i=0; i<hand.size(); i++){
-		cout << "In position "<< i << " you have the " << Output(hand[i].val)<<" of " << hand[i].suit<<endl;
+		cout << "In position "<< i << " you have the " << Output(hand[i].val);<<" of " << hand[i].suit<<endl;
 }
 
 	cout << "Please enter the postions of the cards you want to use IN ORDER:" << endl;
@@ -198,7 +198,7 @@ void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
 	vector<setup> temp;
 
 	for(i=0; i!=stock.size(); i++){
-		cout << i << stock[i].suit << Output(stock[i].val)<<endl;
+		cout << i << stock[i].suit << Output(stock[i].val);<<endl;
 	}
 
 	cout<<"Please enter the starting position of the squence you want to add to:"<<endl;
@@ -218,7 +218,7 @@ void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
 	cout<<"In your hand: "<<endl;
 
 		for(i=0; i<hand.size(); i++){
-		cout << "In position "<< i << " you have the " << hand[i].val<<" of " << hand[i].suit<<endl;
+		cout << "In position "<< i << " you have the " << Output(hand[i].val);<<" of " << hand[i].suit<<endl;
 }
 
 	cout<< "Please enter the position of the cards you want to use IN ORDER: "<<endl;
