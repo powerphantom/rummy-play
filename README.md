@@ -132,7 +132,7 @@ void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
 	cin>>cards;
 
 	for(i=0; i<hand.size(); i++){
-		cout << "In position "<< i << " you have the " << hand[i].val<<" of " << hand[i].suit<<endl;
+		cout << "In position "<< i << " you have the " << Output(hand[i].val)<<" of " << hand[i].suit<<endl;
 }
 
 	cout << "Please enter the postions of the cards you want to use IN ORDER:" << endl;
@@ -198,7 +198,7 @@ void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
 	vector<setup> temp;
 
 	for(i=0; i!=stock.size(); i++){
-		cout << i << stock[i].suit << stock[i].val<<endl;
+		cout << i << stock[i].suit << Output(stock[i].val)<<endl;
 	}
 
 	cout<<"Please enter the starting position of the squence you want to add to:"<<endl;
