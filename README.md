@@ -1,7 +1,4 @@
 #include "setup.h"
-#include "setup.cpp"
-
-char hand[13];
 
 void Deal(stack<setup>& deck, vector<setup>& hand){ 
 	for (int i = 0; i < 13; i++){
@@ -10,7 +7,59 @@ void Deal(stack<setup>& deck, vector<setup>& hand){
   }
 }
 
-void Draw_Card (stack<setup>& deck,vector<setup>& hand,vector<setup> discard){
+void Com_Draw(stack<setup>& deck, vector<setup>& com_hand){
+	com_hand.push_back(deck.top());
+	deck.pop();
+}
+
+void Com_Discard(vector<setup>& discard, vector<setup>& com_hand){
+	discard.push_back(com_hand[0]);
+	com_hand.erase(com_hand.begin());
+}
+
+void Com_Sequence(vector<setup>& stock, vector<setup>& com_hand){
+	int i=0;
+	int j=0;
+	int vcount=0;
+	int scount=0;
+	int hold=0;
+	vector<setup> temp;
+
+	for(i=0; i<com_hand.size(); i++){
+		if(com_hand[i].val>com_hand[i+1].val){
+			std::swap(com_hand[i], com_hand[i+1]);
+			i=0;
+			i--;
+		}
+	}
+
+	for(i=0; i<com_hand.size(); i++){
+		for(j=0; j<com_hand.size(); j++){
+			if(com_hand[i].val==com_hand[j].val){
+				temp.push_back(com_hand[j]);
+				vcount++;}
+		}
+		if (temp.size()<=2){
+			temp.erase(temp.begin(),temp.end());
+			vcount=0;}
+		else
+			break;
+	}
+	
+
+	
+	if(vcount>2){
+		for(i=0; i<temp.size(); i++){
+			for(j=0; j<com_hand.size(); j++){
+				if((temp[i].suit==com_hand[j].suit)&&(temp[i].val==com_hand[j].val)){
+			com_hand.erase(com_hand.begin()+j);}}}
+		for(i=0; i<temp.size(); i++){
+		stock.push_back(temp[i]);}
+	}
+
+}
+
+void Draw_Card (stack<setup>& deck,vector<setup>& hand,vector<setup>& discard){
   int p=0;
   int i=0;
   char resp; //user input
@@ -18,14 +67,14 @@ void Draw_Card (stack<setup>& deck,vector<setup>& hand,vector<setup> discard){
   cout << "Do you wish to draw from the deck?" << endl;
   cin >> resp;
   if (resp == 'Y'||'y'){ //puts new card in hand, removes from stack
-    newCard = deck.top(); 
-    hand.push_back(newCard); //Did we get this working?
-    deck.pop();
+	newCard = deck.top(); 
+	hand.push_back(newCard); //Did we get this working?
+	deck.pop();
   }
   else if (resp == 'N'||'n'){
     cout << "Draw from discard pile?" << endl; //only draws first card, can modify
-    cin >> resp;
-    if (resp == Y||y){
+	cin >> resp;
+    if (resp == 'Y'||'y'){
       for(i=0; i!= discard.size(); i++){
       cout << "In postion " << i << " " << discard[i].suit << discard[i].val << endl;
       }
@@ -44,17 +93,11 @@ void Draw_Card (stack<setup>& deck,vector<setup>& hand,vector<setup> discard){
     cout << "Invalid Response" << endl;
 }
 
-  //Discard: Kyle Probert
-  /*Show the player the cards they have in their hand and what position they're in. Ask the player what is the position of the card they want to get rid of. Use cin to get the positon hand[i].suit hand[i].value to tell their card push_back to put card in the discard pile and delet that card from their hand and decrease the size of their hand.*/
-  
-  void Discard(vector<setup>& hand, vector<setup>& discard){
-
+void Discard(vector<setup>& hand, vector<setup>& discard){
 	int pos;
 
 for (unsigned int i = 0; i < hand.size(); i++) {
-
 	cout << i << ": " << hand[i].suit << hand[i].val << ",  ";
-
 }
 
 	cout << "\n" << "Which card would you like to discard: " << endl;
@@ -62,21 +105,19 @@ for (unsigned int i = 0; i < hand.size(); i++) {
 
 	discard.push_back(hand[pos]); //should add card from hand to last position of discard pile
 	hand.erase(hand.begin() + pos); //should delete card in hand[pos] and decrease size of hand
-
-
-}
-
 }
 
 void Ask_squence(vector<setup>& hand, vector<setup>& stock){
 	char source;
-	cout << "Is you sequence from the stock or your hand: (S/H)"<<endl;
+	cout << "Is you sequence from the stock or your hand: (S/H/N)"<<endl;
 	cin>>source;
 	if (source=='S'){
 		Sequence_Stock(hand, stock);
 	}
 	else if (source=='H'){
 		Sequence_Hand(hand, stock);}
+	else{
+	cout<<"Player 2's turn"<<endl;}
 }
 
 void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
@@ -84,8 +125,8 @@ void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
 	int vcount=0;
 	int scount=0;
 	int i=0;
+	int j=0;
 	vector<setup> temp_stock;
-	vector<setup> temp_stock2;
 
 	cout << "Please enter how many cards you want to use:"<< endl;
 	cin>>cards;
@@ -111,7 +152,7 @@ void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
 	}
 
 
-	if (vcount==cards){
+	if (vcount==cards-2){
 		for(i=0; i<temp_stock.size(); i++){
 			for(j=0; j<hand.size(); j++){
 				if((temp_stock[i].suit==hand[j].suit)&&(temp_stock[i].val==hand[j].val)){
@@ -120,19 +161,17 @@ void Sequence_Hand(vector<setup>& hand, vector<setup>& stock){
 		stock.push_back(temp_stock[i]);
 		}
 	}
-	else if(scount==cards){
-		for(i=0; i<cards; i++){
-		if(temp_stock[i].val>temp_stock[i+1].val){
-			std::swap(temp_stock[i], temp_stock[i+1]);
-			}
-		}
-		scount=0;
-		for(i=0; i<cards; i++){
-			if(temp_stock[i].val!=temp_stock[i+1].val){
-			break;}
-			scount++;}
 
-	if(scount==cards){
+	else if(scount==cards-2){
+	int hold;
+		scount=0;
+		for(i=0; i<cards-1; i++){
+			if((hold+1)==temp_stock[i+1].val){
+			scount++;}
+			else{
+			break;}}
+
+	if(scount==cards-1){
 		for(i=0; i<temp_stock.size(); i++){
 			for(j=0; j<hand.size(); j++){
 				if((temp_stock[i].suit==hand[j].suit)&&(temp_stock[i].val==hand[j].val)){
@@ -162,7 +201,7 @@ void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
 		cout << i << stock[i].suit << stock[i].val<<endl;
 	}
 
-	cout<<"Please enter the starting position of the squence tou want to add to:"<<endl;
+	cout<<"Please enter the starting position of the squence you want to add to:"<<endl;
 	cin>>ipos;
 
 		cout<<"Please enter the final position of the squence tou want to add to:"<<endl;
@@ -216,12 +255,15 @@ void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
 			}
 		}
 		scount=0;
-		for(i=0; i<temp.size(); i++){
-			if(temp[i].val!=temp[i+1].val){
-			break;}
+		int hold;
+		for(i=0; i<temp.size()-1; i++){
+			hold=temp[i].val;
+			if(temp[i+1].val == (hold+1)){
 			scount++;}
+			else{
+			break;}}
 
-	if(scount==temp.size()){
+	if(scount==temp.size()-1){
 		for(i=0; i<temp.size(); i++){
 			for(j=0; j<stock.size(); j++){
 				if((temp[i].suit==stock[j].suit)&&(temp[i].val==stock[j].val)){
@@ -233,7 +275,4 @@ void Sequence_Stock(vector<setup>& hand, vector<setup>& stock){
 	else{
 		cout<<"Invalid Squence"<<endl;}
 
-	for(i=0; i!=stock.size(); i++){
-		cout << i << stock[i].suit << stock[i].val<<endl;
-	}
 }
